@@ -119,6 +119,21 @@ Details: [`docs/architecture.md`](docs/architecture.md)
 
 More: [`docs/data-sources.md`](docs/data-sources.md)
 
+## Optional cloud integrations: AWS & ElevenLabs
+
+EchoMe stays local-first, and AWS and ElevenLabs power **opt-in extras that never receive raw personal data**:
+
+| Service | Used for | What leaves the device |
+|---|---|---|
+| **ElevenLabs** Text-to-Speech | A warm voice for the buddy's replies, including Indian languages such as Hindi | Only the reply sentence, after a privacy filter removes names, numbers and health values |
+| **AWS S3** | End-to-end encrypted backup and restore | An encrypted file that only the user's passphrase can unlock |
+| **AWS** API Gateway + Lambda + DynamoDB | Campus wellbeing dashboard (campus licence) | Anonymous, aggregate counts only |
+| **AWS S3 + CloudFront** | App updates and AI model download | Nothing (download only) |
+
+Echo nudges always use the user's **real recorded voice**; EchoMe never clones or generates it.
+
+Full design, diagram and data-flow table: [`docs/cloud-integrations-aws-elevenlabs.md`](docs/cloud-integrations-aws-elevenlabs.md)
+
 ## What makes it different
 
 Popular products already offer AI coaching on body data, but they focus on fitness and run their AI in the cloud. EchoMe is the only one that sizes **study and work** promises to your body, nudges you **in your own voice**, and keeps **all data on your device**.
@@ -140,6 +155,7 @@ EchoMe/
 ├── docs/
 │   ├── architecture.md          ← components, data flow, decision logic
 │   ├── data-sources.md          ← where data comes from, linked apps, About Me memory
+│   ├── cloud-integrations-aws-elevenlabs.md  ← optional AWS & ElevenLabs integration
 │   └── competitive-analysis.md  ← comparison with existing products + sources
 ├── assets/mockups/              ← concept screens
 └── pitch/                       ← pitch deck (PDF + PPTX)
