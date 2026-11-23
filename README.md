@@ -10,6 +10,7 @@ EchoMe is an on-device AI buddy that sizes your daily promises to what your body
 
 🎥 **Pitch video:** https://youtu.be/q85onK3FPhc
 📊 **Pitch deck:** [`pitch/EchoMe_wHACKiest26.pdf`](pitch/EchoMe_wHACKiest26.pdf) ([.pptx](pitch/EchoMe_wHACKiest26.pptx))
+⭐ **Sponsor integration:** EchoMe's architecture includes optional **AWS** and **ElevenLabs** features → [see how](docs/cloud-integrations-aws-elevenlabs.md)
 
 > **Status:** This repository holds the concept, product design and proposed architecture. It is an idea-stage submission; no working app is included yet.
 
