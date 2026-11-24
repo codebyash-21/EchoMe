@@ -10,9 +10,50 @@ EchoMe is an on-device AI buddy that sizes your daily promises to what your body
 
 🎥 **Pitch video:** https://youtu.be/q85onK3FPhc
 📊 **Pitch deck:** [`pitch/EchoMe_wHACKiest26.pdf`](pitch/EchoMe_wHACKiest26.pdf) ([.pptx](pitch/EchoMe_wHACKiest26.pptx))
-⭐ **Sponsor integration:** EchoMe's architecture includes optional **AWS** and **ElevenLabs** features → [see how](docs/cloud-integrations-aws-elevenlabs.md)
 
-> **Status:** This repository holds the concept, product design and proposed architecture. It is an idea-stage submission; no working app is included yet.
+> **Status:** Working MVP included in [`mvp/`](mvp/) – runs locally in 2 minutes. See [Try the MVP](#try-the-mvp).
+
+⭐ **Sponsor integration:** **ElevenLabs** (Pip's voice) and **AWS S3** (end-to-end encrypted backup) are built into the MVP as opt-in features → [design](docs/cloud-integrations-aws-elevenlabs.md) · [setup](mvp/README.md#optional-cloud-integrations-elevenlabs--aws-opt-in)
+
+---
+
+## Try the MVP
+
+```bash
+cd mvp
+pip install -r requirements.txt
+python -m uvicorn backend.main:app --port 8000
+```
+
+Open **http://localhost:8000**. (Windows: double-click `mvp/run.bat`.) A 15-day sample persona loads automatically. Full guide and demo script: [`mvp/README.md`](mvp/README.md).
+
+**What works in the MVP**
+
+| Feature | In the MVP |
+|---|---|
+| Capacity score from watch data | ✅ Simulated watch sync + CSV import, compared with your own 14-day baseline |
+| Promise negotiation | ✅ Estimates effort, resizes the promise, adds an if-then plan |
+| Echo nudges in your own voice | ✅ Records a why-clip in the browser; plays it back on drift |
+| Push / Protect / Gentle | ✅ Chooses the mode from your words + body state; Protect moves the promise with no penalty |
+| Self-trust score (no streaks) | ✅ |
+| Personal manual | ✅ Rules learned from promise history + "said vs. data" insight, export to Markdown |
+| About Me memory | ✅ Self-introduction → categorised facts → confirm → edit/forget |
+| My Data | ✅ Local SQLite, export JSON, Forget everything |
+| Local AI | ✅ Optional Ollama (Gemma 3 4B); built-in rules work offline |
+| **ElevenLabs** buddy voice | ✅ Opt-in Text-to-Speech for Pip, with an on-device privacy filter; device voice by default |
+| **AWS S3** encrypted backup | ✅ Encrypted on the device with your passphrase, uploaded to S3, restore anytime; saved locally if AWS is off |
+
+| Promise negotiation | Push: your own voice plays back |
+|---|---|
+| ![MVP today and negotiation](assets/mvp/01-today-negotiation.png) | ![MVP push mode](assets/mvp/02-push-own-voice.png) ![MVP protect mode](assets/mvp/05-protect-mode.png) |
+
+| Personal manual | About Me memory |
+|---|---|
+| ![MVP manual](assets/mvp/03-personal-manual.png) | ![MVP about me](assets/mvp/04-about-me.png) |
+
+**AWS + ElevenLabs in the MVP** (My Data → Optional cloud):
+
+![MVP cloud integrations](assets/mvp/06-cloud-integrations.png)
 
 ---
 
@@ -48,7 +89,7 @@ EchoMe combines **body data** (sleep, resting heart rate, steps, stress), **voic
 
 An echo is your own voice, coming back to you. Not a bot's advice. Not someone else's rules. Just you, reminding you, right when you need it.
 
-## Product mockups
+## Product mockups (concept design)
 
 | Morning check-in & promise negotiation | Push vs. Protect |
 |---|---|
@@ -158,7 +199,9 @@ EchoMe/
 │   ├── data-sources.md          ← where data comes from, linked apps, About Me memory
 │   ├── cloud-integrations-aws-elevenlabs.md  ← optional AWS & ElevenLabs integration
 │   └── competitive-analysis.md  ← comparison with existing products + sources
+├── mvp/                         ← working MVP (FastAPI + SQLite + web app)
 ├── assets/mockups/              ← concept screens
+├── assets/mvp/                  ← MVP screenshots
 └── pitch/                       ← pitch deck (PDF + PPTX)
 ```
 

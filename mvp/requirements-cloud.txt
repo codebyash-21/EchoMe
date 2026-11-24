@@ -1,0 +1,3 @@
+# Optional cloud features (ElevenLabs voice, AWS S3 encrypted backup)
+cryptography>=42
+boto3>=1.34

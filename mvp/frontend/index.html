@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EchoMe – know yourself, hear yourself</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo-dot"></span>EchoMe</div>
+    <nav class="tabs" role="tablist">
+      <button class="tab active" data-tab="today">Today</button>
+      <button class="tab" data-tab="manual">Manual</button>
+      <button class="tab" data-tab="about">About Me</button>
+      <button class="tab" data-tab="data">My Data</button>
+    </nav>
+    <span id="ai-chip" class="chip muted">AI: checking…</span>
+  </header>
+
+  <main>
+    <!-- ============================== TODAY ============================== -->
+    <section id="tab-today" class="tab-panel active">
+      <div class="grid">
+        <div class="col">
+          <div class="hello">
+            <div class="sub" id="date-line"></div>
+            <h1 id="greeting">Hi</h1>
+          </div>
+
+          <div class="card buddy-card">
+            <span class="chip light" id="buddy-chip">Pip</span>
+            <div id="buddy"></div>
+            <p class="buddy-line" id="buddy-line"></p>
+          </div>
+
+          <div class="card">
+            <div class="row between">
+              <div>
+                <div class="label">Today's capacity</div>
+                <div class="big" id="cap-min">–</div>
+              </div>
+              <span class="chip" id="cap-chip">–</span>
+            </div>
+            <div class="bar"><div id="cap-bar"></div></div>
+            <ul class="reasons" id="reasons"></ul>
+          </div>
+
+          <div class="metrics">
+            <div class="metric"><div class="label">Sleep</div><div class="v" id="m-sleep">–</div><div class="d" id="m-sleep-d"></div></div>
+            <div class="metric"><div class="label">Resting HR</div><div class="v" id="m-hr">–</div><div class="d" id="m-hr-d"></div></div>
+            <div class="metric"><div class="label">Stress</div><div class="v" id="m-stress">–</div><div class="d"></div></div>
+            <div class="metric"><div class="label">Self-trust</div><div class="v" id="m-trust">–</div><div class="d good">no streaks</div></div>
+          </div>
+
+          <div class="card demo">
+            <div class="label strong">Watch sync</div>
+            <p class="small">Simulate today's smartwatch data, or import a CSV export.</p>
+            <div class="row wrap">
+              <button class="btn ghost" data-sync="rough">Rough night</button>
+              <button class="btn ghost" data-sync="rested">Rested</button>
+              <button class="btn ghost" data-sync="stressed">Stressful day</button>
+              <label class="btn ghost file">Import CSV<input type="file" id="csv" accept=".csv" hidden></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="card">
+            <div class="label strong">Make a promise</div>
+            <form id="promise-form" class="row">
+              <input id="promise-text" placeholder="e.g. I'll study five chapters tonight" autocomplete="off">
+              <button class="btn primary" type="submit">Check it</button>
+            </form>
+          </div>
+
+          <div class="card negotiation hidden" id="negotiation">
+            <div class="label accent">EchoMe suggests</div>
+            <p id="neg-message"></p>
+            <input id="neg-suggested" class="suggested">
+            <div class="row wrap chips" id="neg-chips"></div>
+            <div class="row">
+              <button class="btn primary" id="neg-accept">Accept</button>
+              <button class="btn ghost" id="neg-keep">Keep my original</button>
+            </div>
+          </div>
+
+          <div class="card why hidden" id="why-card">
+            <div class="label strong">Record your why</div>
+            <p class="small">Five seconds, in your own voice. I'll play it back if you drift. It stays on this device.</p>
+            <div class="row">
+              <button class="btn rec" id="rec-btn"><span class="dot"></span><span id="rec-label">Record</span></button>
+              <audio id="rec-preview" controls class="hidden"></audio>
+            </div>
+            <input id="why-text" placeholder="Or type it: why does this matter to you?">
+            <div class="row">
+              <button class="btn primary" id="why-save">Save my why</button>
+              <button class="btn ghost" id="why-skip">Skip</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="row between">
+              <div class="label strong">Active promises</div>
+              <button class="btn small ghost" id="drift-btn" title="Simulates the activity tracker spotting a distraction">Simulate: 40 min on YouTube</button>
+            </div>
+            <ul class="promises" id="active-list"></ul>
+          </div>
+
+          <div class="card">
+            <div class="label strong">How's it going?</div>
+            <form id="checkin-form" class="row">
+              <input id="checkin-text" placeholder="Talk to EchoMe…" autocomplete="off">
+              <button class="btn primary" type="submit">Send</button>
+            </form>
+            <div class="row wrap chips">
+              <button class="chip-btn" data-say="ugh I'm gonna give up on this">"I'm gonna give up"</button>
+              <button class="chip-btn" data-say="I'm so tired, I can't do this">"I'm so tired"</button>
+              <button class="chip-btn" data-say="Going well, halfway done!">"Going well"</button>
+            </div>
+          </div>
+
+          <div class="card response hidden" id="response">
+            <div class="row between">
+              <span class="mode-badge" id="mode-badge">PUSH</span>
+              <button class="btn small ghost" id="hear-btn">🔊 Hear Pip</button>
+            </div>
+            <p id="response-text"></p>
+            <div class="echo hidden" id="echo">
+              <div class="label">Your voice, earlier today</div>
+              <audio id="echo-audio" controls></audio>
+              <blockquote id="echo-text"></blockquote>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="label strong">Recent promises</div>
+            <ul class="promises compact" id="recent-list"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== MANUAL ============================== -->
+    <section id="tab-manual" class="tab-panel">
+      <div class="narrow">
+        <div class="row between">
+          <div><div class="sub">Learned from your own data</div><h1 id="manual-title">Your Manual</h1></div>
+          <a class="btn ghost" href="/api/manual/export.md">Export .md</a>
+        </div>
+        <div id="svd"></div>
+        <div class="label strong spaced">Rules about you</div>
+        <ul class="rules" id="rules"></ul>
+        <p class="small">EchoMe only proposes a rule when your history supports it. Confirm the ones that are true; they shape future suggestions.</p>
+      </div>
+    </section>
+
+    <!-- ============================== ABOUT ME ============================== -->
+    <section id="tab-about" class="tab-panel">
+      <div class="narrow">
+        <div class="sub">Your knowledge base</div>
+        <h1>About me</h1>
+        <div class="card">
+          <div class="label strong">Tell EchoMe something</div>
+          <textarea id="intro-text" rows="3" placeholder="e.g. I'm a 3rd-year CS student. I want to become an ML engineer. I'm a night owl and I get distracted by Reels. Exams are in December."></textarea>
+          <button class="btn primary" id="intro-btn">Understand this</button>
+        </div>
+        <div class="card hidden" id="learned-card">
+          <div class="label accent">Here's what I learned. Keep what's right:</div>
+          <ul class="facts" id="learned"></ul>
+          <button class="btn primary" id="learned-save">Save to my knowledge base</button>
+        </div>
+        <div class="label strong spaced">What EchoMe knows about you</div>
+        <ul class="facts" id="facts"></ul>
+      </div>
+    </section>
+
+    <!-- ============================== MY DATA ============================== -->
+    <section id="tab-data" class="tab-panel">
+      <div class="narrow">
+        <div class="sub">Privacy</div>
+        <h1>My data</h1>
+        <div class="card good-card">
+          <div class="big-line" id="data-summary">…</div>
+          <div class="small" id="data-where"></div>
+        </div>
+        <div class="card">
+          <ul class="kv" id="data-counts"></ul>
+        </div>
+        <div class="label strong spaced">Optional cloud (opt-in)</div>
+        <p class="small">EchoMe works fully offline. These extras never receive raw personal data.</p>
+        <div class="card cloud-card">
+          <div class="row between">
+            <div class="row"><span class="svc">ElevenLabs</span><b>Pip's voice</b></div>
+            <span class="chip muted" id="el-status">checking…</span>
+          </div>
+          <p class="small">Pip reads replies aloud. Before anything is sent, a privacy filter removes health numbers and details:</p>
+          <div class="filter-demo"><span class="label">What would be sent</span><div id="el-preview"></div></div>
+          <div class="row"><button class="btn ghost" id="el-test">🔊 Test Pip's voice</button><span class="small" id="el-result"></span></div>
+        </div>
+        <div class="card cloud-card">
+          <div class="row between">
+            <div class="row"><span class="svc aws">AWS S3</span><b>Encrypted backup</b></div>
+            <span class="chip muted" id="aws-status">checking…</span>
+          </div>
+          <p class="small">Your data is encrypted <b>on this device</b> with your passphrase, then uploaded. AWS only stores a locked file it cannot read.</p>
+          <div class="row"><input type="password" id="aws-pass" placeholder="Backup passphrase (min 6 characters)"></div>
+          <div class="row wrap">
+            <button class="btn primary" id="aws-backup">Back up now</button>
+            <button class="btn ghost" id="aws-restore">Restore latest backup</button>
+          </div>
+          <div class="small" id="aws-result"></div>
+        </div>
+        <div class="row wrap">
+          <a class="btn ghost" href="/api/export">Export everything (JSON)</a>
+          <button class="btn ghost" id="reset-btn">Reload sample data</button>
+          <button class="btn danger" id="forget-btn">Forget everything</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
