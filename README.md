@@ -13,6 +13,7 @@ EchoMe is an on-device AI buddy that sizes your daily promises to what your body
 
 > **Status:** Working MVP included in [`mvp/`](mvp/) – runs locally in 2 minutes. See [Try the MVP](#try-the-mvp).
 > Demo video of mvp:https://drive.google.com/file/d/1uJvGNcYlGHG1mSi2GrdMp2z8SaEk9nPU/view?usp=sharing
+> 🌐 **Live demo (no install):https://echome-altf4.netlify.app
 
 ⭐ **Sponsor integration:** **ElevenLabs** (Pip's voice) and **AWS S3** (end-to-end encrypted backup) are built into the MVP as opt-in features → [design](docs/cloud-integrations-aws-elevenlabs.md) · [setup](mvp/README.md#optional-cloud-integrations-elevenlabs--aws-opt-in)
 
